@@ -1,34 +1,139 @@
-<!--
-  =============================
-  شرح تفصيلي لكل جزء من الكود في صفحة الأسئلة الشائعة (faq.html)
-  =============================
-  - هذا الملف يعرض الأسئلة المتكررة بطريقة تفاعلية مع تأثيرات Accordion وAOS.
-  - كل قسم مشروح بتعليقات عربية توضح وظيفة كل عنصر أو جزء برمجي/تصميمي.
--->
-
-<!--
-  ملف HTML لصفحة الأسئلة الشائعة (FAQ) في موقع Lilyum Nails
-  - يعرض الأسئلة المتكررة بطريقة تفاعلية مع تأثيرات Accordion وAOS.
-  - جميع الأقسام مشروحة بتعليقات عربية توضح وظيفة كل جزء من الصفحة.
--->
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>الأسئلة الشائعة - Lilyum Nails</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="imege/logo/logo.png" type="image/png" />
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <style>
-    .faq-hero {
+    /* إعادة تعيين CSS */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Tajawal', 'Cairo', sans-serif;
+      background: #fdf2f8;
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* الشريط العلوي */
+    .top-nav {
+      background: linear-gradient(135deg, #e91e63, #ad1457);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(173, 20, 87, 0.3);
+    }
+    
+    .top-nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    
+    .top-nav li {
+      margin: 0 15px;
+    }
+    
+    .top-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .top-nav a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .top-nav a.active {
+      background: white;
+      color: #ad1457;
+      box-shadow: 0 4px 10px rgba(173, 20, 87, 0.3);
+    }
+    
+    /* الهيدر */
+    header {
       text-align: center;
       padding: 40px 20px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 240, 245, 0.9));
       position: relative;
       overflow: hidden;
+    }
+    
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="rgba(233,30,99,0.1)" stroke-width="2"/></svg>');
+      background-size: 20px 20px;
+      opacity: 0.5;
+      z-index: 0;
+    }
+    
+    header img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 5px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 10px 30px rgba(173, 20, 87, 0.2);
+      position: relative;
+      z-index: 1;
+      background: white;
+    }
+    
+    header h1 {
+      font-size: 2.8rem;
+      color: #ad1457;
+      margin: 20px 0 10px;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .subtitle {
+      font-size: 1.8rem;
+      color: #e91e63;
+      font-weight: 600;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .tagline {
+      font-size: 1.2rem;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* قسم الأسئلة الشائعة */
+    .faq-hero {
+      text-align: center;
+      padding: 60px 20px 40px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(255, 240, 245, 0.9), rgba(255, 255, 255, 0.9));
     }
     
     .faq-hero::before {
@@ -39,7 +144,8 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(45deg, rgba(233, 30, 99, 0.1), rgba(173, 20, 87, 0.1));
-      animation: heroShimmer 4s ease-in-out infinite;
+      animation: heroShimmer 8s ease-in-out infinite;
+      z-index: 0;
     }
     
     .faq-hero h2 {
@@ -47,6 +153,12 @@
       color: #ad1457;
       margin-bottom: 15px;
       animation: titleGlow 3s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
     }
     
     .faq-hero p {
@@ -54,12 +166,15 @@
       color: #666;
       max-width: 600px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
     
     .faq-search {
       max-width: 500px;
       margin: 30px auto;
       position: relative;
+      z-index: 1;
     }
     
     .faq-search input {
@@ -71,6 +186,7 @@
       backdrop-filter: blur(10px);
       font-size: 1.1rem;
       transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(173, 20, 87, 0.1);
     }
     
     .faq-search input:focus {
@@ -91,18 +207,19 @@
     .faq-accordion {
       max-width: 1000px;
       margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 20px 40px;
     }
     
     .faq-item {
       margin-bottom: 20px;
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(25px);
       border-radius: 20px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.5);
       box-shadow: 0 10px 30px rgba(173, 20, 87, 0.1);
       transition: all 0.3s ease;
+      position: relative;
     }
     
     .faq-item:hover {
@@ -120,6 +237,7 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      z-index: 1;
     }
     
     .faq-question::before {
@@ -130,7 +248,8 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
+      transition: left 0.8s;
+      z-index: -1;
     }
     
     .faq-question:hover::before {
@@ -155,6 +274,8 @@
     .faq-question .icon {
       font-size: 1.5rem;
       color: #e91e63;
+      min-width: 30px;
+      text-align: center;
     }
     
     .faq-toggle {
@@ -168,6 +289,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
     
     .faq-item.active .faq-toggle {
@@ -183,7 +305,7 @@
     }
     
     .faq-item.active .faq-answer {
-      max-height: 300px;
+      max-height: 500px;
       padding: 25px 30px;
     }
     
@@ -195,26 +317,52 @@
       animation: fadeInUp 0.5s ease-out;
     }
     
+    /* قسم التواصل */
     .faq-cta {
       text-align: center;
-      margin: 60px 0;
+      margin: 60px 20px;
       padding: 40px 20px;
       background: linear-gradient(135deg, rgba(233, 30, 99, 0.1), rgba(173, 20, 87, 0.1));
       border-radius: 30px;
       backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .faq-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/></svg>');
+      background-size: 30px 30px;
+      opacity: 0.3;
     }
     
     .faq-cta h3 {
       font-size: 2rem;
       color: #ad1457;
       margin-bottom: 15px;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
     }
     
     .faq-cta p {
       font-size: 1.2rem;
       color: #666;
       margin-bottom: 25px;
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
     }
     
     .cta-buttons {
@@ -222,6 +370,8 @@
       gap: 20px;
       justify-content: center;
       flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
     }
     
     .cta-btn {
@@ -236,6 +386,8 @@
       gap: 10px;
       position: relative;
       overflow: hidden;
+      border: none;
+      cursor: pointer;
     }
     
     .cta-btn::before {
@@ -246,7 +398,7 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.5s;
+      transition: left 0.8s;
     }
     
     .cta-btn:hover::before {
@@ -276,12 +428,17 @@
       transform: translateY(-2px);
     }
     
+    /* رسالة عدم وجود نتائج */
     .no-results {
       text-align: center;
       padding: 40px 20px;
       color: #666;
       font-size: 1.2rem;
       display: none;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 20px;
+      margin: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     }
     
     .no-results i {
@@ -291,6 +448,67 @@
       display: block;
     }
     
+    /* الفوتر */
+    footer {
+      background: linear-gradient(135deg, #e91e63, #ad1457);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/></svg>');
+      background-size: 30px 30px;
+      opacity: 0.3;
+    }
+    
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-bottom: 25px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .icon-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    
+    .icon-link:hover {
+      transform: translateY(-5px);
+      background: white;
+      color: #e91e63;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    footer p {
+      font-size: 1.1rem;
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    /* الرسوم المتحركة */
     @keyframes heroShimmer {
       0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
@@ -306,7 +524,38 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    /* التصميم المتجاوب */
     @media (max-width: 768px) {
+      .top-nav li {
+        margin: 5px 10px;
+      }
+      
+      .top-nav a {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+      }
+      
+      header h1 {
+        font-size: 2.2rem;
+      }
+      
+      .subtitle {
+        font-size: 1.5rem;
+      }
+      
+      .faq-hero h2 {
+        font-size: 2rem;
+      }
+      
+      .faq-hero p {
+        font-size: 1.1rem;
+      }
+      
       .faq-question {
         padding: 20px;
       }
@@ -329,6 +578,51 @@
         max-width: 300px;
         justify-content: center;
       }
+      
+      .faq-cta h3 {
+        font-size: 1.8rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .top-nav ul {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .top-nav li {
+        margin: 5px 0;
+      }
+      
+      header {
+        padding: 30px 15px;
+      }
+      
+      header img {
+        width: 100px;
+        height: 100px;
+      }
+      
+      header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .subtitle {
+        font-size: 1.3rem;
+      }
+      
+      .tagline {
+        font-size: 1rem;
+      }
+      
+      .faq-hero h2 {
+        font-size: 1.7rem;
+      }
+      
+      .faq-question h3 {
+        font-size: 1.1rem;
+        gap: 10px;
+      }
     }
   </style>
 </head>
@@ -345,7 +639,7 @@
 </nav>
 
 <header data-aos="fade-down" data-aos-duration="1000">
-  <img src="imege/logo/logo.png" alt="Lilyum Logo" data-aos="zoom-in" data-aos-delay="300">
+  <img src="https://via.placeholder.com/120/ffcce6/ad1457?text=LN" alt="Lilyum Logo" data-aos="zoom-in" data-aos-delay="300">
   <h1 data-aos="fade-up" data-aos-delay="500">Lilyum Nails</h1>
   <p class="subtitle" data-aos="fade-up" data-aos-delay="600">الأسئلة الشائعة</p>
   <p class="tagline" data-aos="fade-up" data-aos-delay="700">كل ما تحتاجين معرفته قبل طلب تصميمك المميز!</p>
@@ -433,10 +727,11 @@
         <div class="faq-toggle">
           <i class="fas fa-chevron-down"></i>
         </div>
+      </div>
+      <div class="faq-answer">
+        <p>نوفّر خدمة شحن آمنة وسريعة داخل المملكة العربية السعودية وخارجها عبر شركات الشحن المعتمدة. يتم إرسال رقم التتبع مباشرة من قبل شركة الشحن فور شحن الطلب، لتتمكن من متابعة طلبك حتى باب منزلك بكل سهولة واطمئنان.</p>
+      </div>
     </div>
-<div class="faq-answer">
-  <p>نوفّر خدمة شحن آمنة وسريعة داخل المملكة العربية السعودية وخارجها عبر شركات الشحن المعتمدة. يتم إرسال رقم التتبع مباشرة من قبل شركة الشحن فور شحن الطلب، لتتمكن من متابعة طلبك حتى باب منزلك بكل سهولة واطمئنان.</p>
-</div>
 
     <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
       <div class="faq-question">
@@ -558,7 +853,7 @@
     });
   });
 
-  // Search functionality
+  // Improved search functionality
   const searchInput = document.getElementById('faq-search');
   const noResults = document.getElementById('no-results');
   
@@ -573,6 +868,25 @@
       if (question.includes(searchTerm) || answer.includes(searchTerm) || searchTerm === '') {
         item.style.display = 'block';
         hasResults = true;
+        
+        // Highlight search term
+        if (searchTerm) {
+          const questionText = item.querySelector('h3').innerHTML;
+          const answerText = item.querySelector('.faq-answer p').innerHTML;
+          
+          const highlightedQuestion = questionText.replace(
+            new RegExp(searchTerm, 'gi'),
+            match => `<span class="highlight">${match}</span>`
+          );
+          
+          const highlightedAnswer = answerText.replace(
+            new RegExp(searchTerm, 'gi'),
+            match => `<span class="highlight">${match}</span>`
+          );
+          
+          item.querySelector('h3').innerHTML = highlightedQuestion;
+          item.querySelector('.faq-answer p').innerHTML = highlightedAnswer;
+        }
       } else {
         item.style.display = 'none';
         item.classList.remove('active');
@@ -603,6 +917,10 @@
       faqItems.forEach(item => {
         item.classList.remove('active');
       });
+      
+      // Clear search
+      searchInput.value = '';
+      searchInput.dispatchEvent(new Event('input'));
     }
   });
 
@@ -620,7 +938,19 @@
       question.style.transform = 'translateX(0)';
     });
   });
+  
+  // Add highlight style
+  const style = document.createElement('style');
+  style.innerHTML = `
+    .highlight {
+      background-color: #ffeb3b;
+      color: #e91e63;
+      font-weight: bold;
+      padding: 0 2px;
+      border-radius: 3px;
+    }
+  `;
+  document.head.appendChild(style);
 </script>
 </body>
 </html>
-
